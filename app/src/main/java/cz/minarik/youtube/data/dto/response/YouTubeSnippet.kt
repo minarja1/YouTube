@@ -1,4 +1,4 @@
-package cz.minarik.base.data.rest.dto.response.youtube
+package cz.minarik.youtube.data.dto.response
 
 data class YouTubeSnippet(
     val title: String? = null,

@@ -1,6 +1,6 @@
 package cz.minarik.youtube.data.service
 
-import cz.minarik.base.data.rest.dto.response.youtube.YouTubeVideosResponse
+import cz.minarik.youtube.data.dto.response.YouTubeVideosResponse
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
