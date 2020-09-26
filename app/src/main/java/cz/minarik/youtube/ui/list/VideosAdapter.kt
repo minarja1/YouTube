@@ -4,25 +4,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
-import cz.minarik.base.R
-import cz.minarik.youtube.data.dto.model.YouTubeVideo
+import cz.minarik.youtube.R
+import cz.minarik.youtube.ui.custom.YouTubeVideoListViewDTO
+import cz.minarik.youtube.ui.custom.YoutubeVideoListItem
 
-class VideosAdapter(private var onItemClicked: (video: YouTubeVideo, imageView: ImageView) -> Unit) :
-    PagedListAdapter<YouTubeVideo, RecyclerView.ViewHolder>(diffCallback) {
+class VideosAdapter(private var onItemClicked: (video: YouTubeVideoListViewDTO, imageView: ImageView) -> Unit) :
+    PagedListAdapter<YouTubeVideoListViewDTO, RecyclerView.ViewHolder>(diffCallback) {
 
     companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<YouTubeVideo>() {
+        private val diffCallback = object : DiffUtil.ItemCallback<YouTubeVideoListViewDTO>() {
 
-            override fun areItemsTheSame(oldItem: YouTubeVideo, newItem: YouTubeVideo): Boolean {
+            override fun areItemsTheSame(oldItem: YouTubeVideoListViewDTO, newItem: YouTubeVideoListViewDTO): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: YouTubeVideo, newItem: YouTubeVideo): Boolean {
+            override fun areContentsTheSame(oldItem: YouTubeVideoListViewDTO, newItem: YouTubeVideoListViewDTO): Boolean {
                 return oldItem == newItem
             }
         }
@@ -36,23 +35,16 @@ class VideosAdapter(private var onItemClicked: (video: YouTubeVideo, imageView: 
     }
 
     class VideoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val title: TextView = view.findViewById(R.id.title)
-        private val imageView: ImageView = view.findViewById(R.id.imageView)
-        private val videoBackGround: ViewGroup = view.findViewById(R.id.videoBackGround)
+        private val youtubeVideoItem: YoutubeVideoListItem = view.findViewById(R.id.youtubeVideoItem)
 
         fun bind(
-            video: YouTubeVideo?,
-            onItemClicked: (video: YouTubeVideo, imageView: ImageView) -> Unit
+            video: YouTubeVideoListViewDTO?,
+            onItemClicked: (video: YouTubeVideoListViewDTO, imageView: ImageView) -> Unit
         ) {
             if (video == null) return
-            title.text = video.title
-            imageView.load(video.maxResThumbnailUrl) {
-                crossfade(true)
-            }
-            imageView.transitionName = video.maxResThumbnailUrl
-
-            videoBackGround.setOnClickListener {
-                onItemClicked(video, imageView)
+            youtubeVideoItem.set(video)
+            youtubeVideoItem.setOnClickListener {
+                onItemClicked(video, youtubeVideoItem.thumbnailImageView)
             }
         }
     }

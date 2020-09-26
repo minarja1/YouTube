@@ -1,13 +1,13 @@
 package cz.minarik.youtube.data.dto.response
 
-import cz.minarik.youtube.data.dto.model.YouTubeVideo
+import cz.minarik.youtube.ui.custom.YouTubeVideoListViewDTO
 
 data class YouTubeVideoItem(
     val id: String? = null,
     val snippet: YouTubeSnippet? = null
 ) {
-    fun toYoutubeVideo(): YouTubeVideo {
-        return YouTubeVideo(
+    fun toYoutubeVideo(): YouTubeVideoListViewDTO {
+        return YouTubeVideoListViewDTO(
             id,
             snippet?.title,
             snippet?.description,

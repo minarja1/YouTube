@@ -23,7 +23,7 @@
         android:label="Video detail" >
         <argument
             android:name="video"
-            app:argType="cz.minarik.youtube.data.dto.model.YouTubeVideo" />
+            app:argType="cz.minarik.youtube.ui.custom.YouTubeVideoListViewDTO" />
     </fragment>
 
 </navigation>

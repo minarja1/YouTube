@@ -3,4 +3,5 @@
 
     <dimen name="padding_default">16dp</dimen>
     <dimen name="tall_toolbar_height">56dp</dimen>
+    <dimen name="rounded_corner">4dp</dimen>
 </resources>

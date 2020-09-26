@@ -23,7 +23,7 @@ interface YoutubeApiService {
         @Query("part") part: String,
         @Query("chart") chart: String,
         @Query("regionCode") regionCode: String,
-        @Query("videoCategoryId") videoCategoryId: String,
+        @Query("videoCategoryId") videoCategoryId: String? = "0",
         @Query("key") apiKey: String,
         @Query("pageToken") pageToken: String? = null,
         @Query("maxResults") maxResults: Int

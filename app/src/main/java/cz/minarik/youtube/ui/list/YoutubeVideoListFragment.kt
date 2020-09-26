@@ -8,6 +8,7 @@ import cz.minarik.base.R
 import cz.minarik.base.common.extensions.initToolbar
 import cz.minarik.base.data.NetworkState
 import cz.minarik.base.ui.base.BaseFragment
+import cz.minarik.youtube.util.dividerLarge
 import kotlinx.android.synthetic.main.fragment_youtube_video_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,9 +35,7 @@ class YoutubeVideoListFragment : BaseFragment(R.layout.fragment_youtube_video_li
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-
         initObservers()
-
         initSwipeToRefresh()
     }
 
@@ -48,15 +47,16 @@ class YoutubeVideoListFragment : BaseFragment(R.layout.fragment_youtube_video_li
 
     private fun initViews() {
         initToolbar(toolbar)
+        recyclerView.dividerLarge()
         recyclerView.adapter = youtubeAdapter
     }
 
     private fun initSwipeToRefresh() {
         viewModel.loadingInitial.observe {
-            swipe_refresh.isRefreshing = it == NetworkState.LOADING
+            swipeRefreshLayout.isRefreshing = it == NetworkState.LOADING
         }
 
-        swipe_refresh.setOnRefreshListener {
+        swipeRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
     }

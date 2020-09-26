@@ -1,6 +1,6 @@
 package cz.minarik.youtube.data.dto.response
 
-import cz.minarik.youtube.data.dto.model.YouTubeVideo
+import cz.minarik.youtube.ui.custom.YouTubeVideoListViewDTO
 
 data class YouTubeVideosResponse(
     val kind: String? = null,
@@ -10,8 +10,8 @@ data class YouTubeVideosResponse(
     val pageInfo: YouTubePageInfo? = null,
     val items: List<YouTubeVideoItem?>? = null
 ) {
-    fun toVideoList(): MutableList<YouTubeVideo> {
-        val result = mutableListOf<YouTubeVideo>()
+    fun toVideoList(): MutableList<YouTubeVideoListViewDTO> {
+        val result = mutableListOf<YouTubeVideoListViewDTO>()
         if (items.isNullOrEmpty()) return result
         for (item in items) {
             item?.let {

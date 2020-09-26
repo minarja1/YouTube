@@ -1,11 +1,11 @@
-package cz.minarik.youtube.data.db.repository
+package cz.minarik.youtube.data.repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import cz.minarik.base.common.apiKey
 import cz.minarik.base.data.NetworkState
-import cz.minarik.youtube.data.dto.model.YouTubeVideo
 import cz.minarik.youtube.data.service.YoutubeApiService
+import cz.minarik.youtube.ui.custom.YouTubeVideoListViewDTO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
@@ -14,7 +14,7 @@ class PagedYouTubeVideoDataSource(
     private val apiService: YoutubeApiService,
     private val scope: CoroutineScope,
     private val retryExecutor: Executor
-) : PageKeyedDataSource<String, YouTubeVideo>() {
+) : PageKeyedDataSource<String, YouTubeVideoListViewDTO>() {
 
     // keep a function reference for the retry event
     private var retry: (() -> Any)? = null
@@ -29,7 +29,7 @@ class PagedYouTubeVideoDataSource(
 
     override fun loadBefore(
         params: LoadParams<String>,
-        callback: LoadCallback<String, YouTubeVideo>
+        callback: LoadCallback<String, YouTubeVideoListViewDTO>
     ) {
         // ignored, since we only ever append to our initial load
     }
@@ -46,17 +46,16 @@ class PagedYouTubeVideoDataSource(
 
     override fun loadInitial(
         params: LoadInitialParams<String>,
-        callback: LoadInitialCallback<String, YouTubeVideo>
+        callback: LoadInitialCallback<String, YouTubeVideoListViewDTO>
     ) {
         loadingInitial.postValue(NetworkState.LOADING)
         scope.launch {
             try {
                 val response = apiService.getYouTubeVideoList(
-                    "snippet",
-                    "mostPopular",
-                    "US",
-                    "2",
-                    apiKey,
+                    part = "snippet",
+                    chart = "mostPopular",
+                    regionCode = "US",
+                    apiKey = apiKey,
                     maxResults = params.requestedLoadSize
                 )
 
@@ -82,17 +81,16 @@ class PagedYouTubeVideoDataSource(
 
     override fun loadAfter(
         params: LoadParams<String>,
-        callback: LoadCallback<String, YouTubeVideo>
+        callback: LoadCallback<String, YouTubeVideoListViewDTO>
     ) {
         loadingAfter.postValue(NetworkState.LOADING)
         scope.launch {
             try {
                 val response = apiService.getYouTubeVideoList(
-                    "snippet",
-                    "mostPopular",
-                    "US",
-                    "2",
-                    apiKey,
+                    part = "snippet",
+                    chart = "mostPopular",
+                    regionCode = "US",
+                    apiKey = apiKey,
                     pageToken = params.key,
                     maxResults = params.requestedLoadSize
                 )

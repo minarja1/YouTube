@@ -22,7 +22,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import cz.minarik.base.common.pageSize
 import cz.minarik.base.data.PagedListWithCallbacks
-import cz.minarik.youtube.data.dto.model.YouTubeVideo
+import cz.minarik.youtube.ui.custom.YouTubeVideoListViewDTO
 import cz.minarik.youtube.data.service.YoutubeApiService
 import kotlinx.coroutines.CoroutineScope
 import java.util.concurrent.Executor
@@ -44,7 +44,7 @@ class YouTubeVideoPagedRepository(
         .build()
 
     @MainThread
-    fun getYouTubeVideos(): PagedListWithCallbacks<YouTubeVideo> {
+    fun getYouTubeVideos(): PagedListWithCallbacks<YouTubeVideoListViewDTO> {
         val sourceFactory = YouTubeVideoDataSourceFactory(apiService, scope, networkExecutor)
 
         val livePagedList = LivePagedListBuilder(sourceFactory, pagedListConfig()).setFetchExecutor(networkExecutor).build()
